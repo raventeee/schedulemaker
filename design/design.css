@@ -1,0 +1,63 @@
+.error_codes {
+    color: red;
+    font-size: 10pt;
+}
+table, th, td {
+    border:1px solid black;
+    font-size: 80%;
+    text-align: center;
+    border-spacing: 3px 1px;
+}
+td{
+    color:white;
+    background-color:slategrey;
+}
+table{
+    table-layout: fixed;
+    padding: 0px;
+}
+.time
+{
+    color:black;
+    background-color: white;
+    width: 5%;
+}
+.firstclass
+{
+    border-top: 3px solid green;
+    border-right: 3px solid green;
+    border-left: 3px solid green;
+}
+.lastclass
+{
+    border-right: 3px solid green;
+    border-left: 3px solid green;
+    border-bottom: 3px solid green;    
+}
+.initialclass
+{
+    border-top: 3px solid green;
+    border-right: 3px solid green;
+    border-left: 3px solid green;
+}
+.finishclass
+{
+    border-bottom: 3px solid green;
+    border-right: 3px solid green;
+    border-left: 3px solid green;
+}
+.normalclass
+{
+    border-right: 3px solid green;
+    border-left: 3px solid green;
+}
+#prev {
+    margin-right: 30%; 
+    margin-top: 10px; 
+    margin-bottom: 10px;
+}
+#next {
+    margin-left: 30%; 
+    margin-top: 10px; 
+    margin-bottom: 10px;
+}
