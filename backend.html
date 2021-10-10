@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        table, th, td {
+          border:1px solid black;
+          font-size: 80%;
+          text-align: center;
+          border-spacing: 3px 1px;
+        }
+        td{
+            color:white;
+            background-color:slategrey;
+        }
+        table{
+            table-layout: fixed;
+            padding: 0px;
+        }
+        .time
+        {
+            color:black;
+            background-color: white;
+            width: 5%;
+        }
+        .firstclass
+        {
+            border-top: 3px solid green;
+            border-right: 3px solid green;
+            border-left: 3px solid green;
+        }
+        .lastclass
+        {
+            border-right: 3px solid green;
+            border-left: 3px solid green;
+            border-bottom: 3px solid green;    
+        }
+        .initialclass
+        {
+            border-top: 3px solid green;
+            border-right: 3px solid green;
+            border-left: 3px solid green;
+        }
+        .finishclass
+        {
+            border-bottom: 3px solid green;
+            border-right: 3px solid green;
+            border-left: 3px solid green;
+        }
+        .normalclass
+        {
+            border-right: 3px solid green;
+            border-left: 3px solid green;
+        }
+        
+    </style>
+    <head>
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="functions.js"></script>
+        <script src="classes.js"></script>
+    </head>
+    <body>
+        <button id = "prev" onclick="previous()"><</button>
+        <button id = "next" onclick="next()">></button>
+        <div id= "schedview">
+        </div>
+    </body>
+    
+    <script type="text/javascript">
+    let currentStudent = new student();
+    let preprocess = [];
+    let validatedscheds = [];
+    let currentsched;
+    const container = document.getElementById("schedview");
+    let currentpage;
+ 
+ 
+    classname = ["CCPROG3","CSALGCM"]; 
+    classinfo = [[["S13 - Nats" , [["M","7:30","9:00"],["W","7:30","9:00"]]  ],
+    ["S12 - Arren" ,[["M","11:00","12:30"],["W","11:00","12:30"],["F","11:00","12:30"]]]],[["S11 - Austin", [["W","14:00","15:30"]]]] ];
+
+
+
+
+
+    generateclasses(classname,classinfo);
+    
+    
+
+
+
+
+
+
+    console.log("classname and classinfo length: " + classname.length + " " + classinfo.length);
+    console.log("how many sections does prog3 have: " + classinfo[0].length);
+    console.log("how many sections does algcm have: " + classinfo[1].length);
+    console.log("inside of classinfo(always be 2): " + classinfo[0][0].length+ " " + classinfo[0][1].length + " " + classinfo[1][0].length);
+    console.log("how many timeslots does nats have: " + classinfo[0][0][1].length);
+    console.log("how many timeslots does arren have: " + classinfo[0][1][1].length);
+    console.log("how many timeslots does austin have: " + classinfo[1][0][1].length);
+
+
+    </script>
+</html>
