@@ -144,32 +144,35 @@ function printone()
         }
       container.innerHTML=schedinfo;
 }
-function previous()
-{
-    if (currentpage == 0)
-    {
-        currentpage = validatedscheds.length-1;
-    }
-    else
-    {
-        currentpage = currentpage - 1;
-    }
-    console.log(currentpage);
-    printone();
-}
-function next()
-{
-    if (currentpage == validatedscheds.length-1)
-    {
-        currentpage = 0;
-    }
-    else
-    {
-        currentpage = currentpage + 1;
-    }
-    console.log(currentpage);
-    printone();
-}
 
 
+// var classnames = ["CCPROG3","CSALGCM"]; 
+// var classinfo = [
+//     [
+//         ["S13 - Nats" , [["M","7:30","9:00"],["W","7:30","9:00"]]  ],
+//         ["S12 - Arren" ,[
+//                 ["M","11:00","12:30"],["W","11:00","12:30"],["F","11:00","12:30"]]],
+//     ],
+//     [
+//         [["S11 - Austin", [["W","14:00","15:30"]]]]
+//     ]
+// ];
 
+// var classinfo = [
+//     [
+//         [
+//             "S13-NATS", [
+//                 ["M", "7:30", "9:00"],
+//                 ["W", "7:30", "9:00"]
+//             ]
+//         ],
+//         [
+//             "S12 - Arren" ,[
+//                 ["M","11:00","12:30"],["W","11:00","12:30"],["F","11:00","12:30"]
+//             ]
+//         ]
+//     ],
+//     [
+//         [["S11 - Austin", [["W","14:00","15:30"]]]]
+//     ]
+// ];
