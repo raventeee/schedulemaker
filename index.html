@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html>
     <head>
+		<title>Schedule Maker</title>
 		<meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="stylesheet" type="text/css" href="dist/css/bootstrap.min.css">
-		<link rel="stylesheet" href="fontawesome/css/all.css">
-		<link rel="stylesheet" href="css/design.css">
-    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="design/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="design/fontawesome/css/all.css">
+		<link rel="stylesheet" href="design/design.css">
+    	
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script type="text/javascript" src="index.js"></script>
 	</head>
     <body>
-		<form id="putsched" class="container">
+		<div id="div_add_form" class="container">
 			<div class="row">
 				<div class="col">
 					<div class="container">
@@ -26,14 +29,14 @@
 								<button class="btn btn-secondary btn-md" id="add_section"><i style="width: 20px; height: 20px;" class="fa fa-plus-circle" aria-hidden="true"></i>Add Section</button>
 								
 								<div id="add_prof_div" style="display:none;">
-									<h3>Enter Professor's name and section</h3>
+									<h3 id="prof_prompt">Enter Professor's name and section</h3>
 									<div class="row">
-										<div class="col-6">
+										<div class="col-5">
 											<label for="input_prof">Professor: </label>
 											<input type="text" id="input_prof" name="input_prof">
 											<p id="prof_error" class="error_codes"></p>
 										</div>
-										<div class="col-6">
+										<div class="col-5">
 											<label for="input_section">Section: </label>
 											<input type="text" id="input_section" name="input_section">
 											<p id="section_error" class="error_codes"></p>
@@ -41,6 +44,16 @@
 									</div>
 									<br>
 									<button class="btn btn-secondary btn-md" id="confirm_sectionprof">Confirm</button>
+									<button class="btn btn-secondary btn-md" id="another_sectionprof" style="display: none;">Confirm</button>
+								</div>
+
+							</div>
+
+							<div class="col">
+								<div class="container" id="div_sched_items" style="display:block;">
+									<div class="row">
+										<div id="sched_items" class="list-group"></div>
+									</div>
 								</div>
 							</div>
 							<hr>
@@ -48,7 +61,7 @@
 						    <div class="container" id="time_div" style="display: none;">
 								<label>Day</label>
 								<select name="input_day" id="input_day">
-									<option value="M" selected>MON</option>
+									<option value="M">MON</option>
 									<option value="T">TUE</option>
 									<option value="W">WED</option>
 									<option value="H">THU</option>
@@ -173,28 +186,37 @@
 									<option value="20:45">20:45</option>
 									<option value="21:00">21:00</option>
 								</select>
-								<button id="add_item" type="button" class="btn btn-secondary">Add</button>
+								<button id="add_item" type="button" class="btn btn-success">Add</button>
 								<br>
 							</div>
 						</div>
-						<button id="reset_form" class="btn btn-secondary" style="display: none;">Reset</button>
+						<button id="add_another" class="btn btn-secondary" style="display: none;">Add Another Section</button>
+						<button id="putsched" class="btn btn-success" style="display: none;">Finish</button>
 					</div>
 				</div>
 
 				<div class="col">
-					<div class="container" id="div_sched_items" style="display:block;">
-						<h1>CLASSES</h1>
+					<div class="container" id="all_sched_items" style="display:block;">
+						<h2>CLASSES</h2>
 						<div class="row">
-							<div id="sched_items" class="list-group"></div>
+							<div id="schedules" class="list-group"></div>
 						</div>
 					</div>
 				</div>
 
 			</div>
 			<hr>
-			<button type="submit" type="button" class="btn btn-primary">Finish</button>
-		</form>
+		</div>
+
+		<div class="container">
+			<button id="generate" class="btn btn-primary" style="display: none;">GENERATE</button>
+			<div id="generated_scheds" class="d-flex justify-content-center" style="display: none;">
+				<button class="btn btn-warning" id="prev" style="display: none;">Previous</button>
+				<button class="btn btn-success" id="next" style="display: none;">Next</button>
+			</div>
+	
+			<div id= "schedview"></div>
+		</div>
+
     </body>
-    <script type="text/javascript" src="index.js">
-    </script>
 </html>
