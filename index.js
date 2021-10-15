@@ -426,9 +426,11 @@ $(document).ready(function() {
         $("#another_sectionprof").show();
         $("#add_another").hide();
         $("#putsched").hide();
+        $("#time_div").hide();
     });
 
     $("#another_sectionprof").click(function() {
+        $("#time_div").show();
         var prof = $("#input_prof").val().toString();
         var section = $("#input_section").val().toString();
 
