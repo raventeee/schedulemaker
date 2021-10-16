@@ -318,6 +318,7 @@ $(document).ready(function() {
             courseDiv.append(
                 "<div class='d-inline-flex'>" +
                 "<h4 class='p-2'>" + class_name + "</h4>" +
+                // classes add_prof and del_prof
                 "<button class='btn btn-success btn-md p-2 add_prof' style='margin-left: 250px; margin-right: 5px;'><i class='fas fa-plus-circle'></i></button>" +
                 "<button class='btn btn-danger btn-md p-2 del_prof'><i class='fas fa-trash'></i></button>" +
                 "</div>"
@@ -333,11 +334,12 @@ $(document).ready(function() {
         }
     });
 
-    $(".add_prof").click(function() {
+    $(document).on("click", ".add_prof", function() {
         // add prof div
+        $("#add_prof_div").show();
     });
 
-    $(".del_prof").click(function() {
+    $(document).on("click", ".del_prof", function() {
         // delete prof div
     });
 
