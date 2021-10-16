@@ -304,12 +304,41 @@ $(document).ready(function() {
     });
 
     $("#add_class").click(function() {
-        $("#add_section_div").show();
-        $("#prof_prompt").show();
-        $("#input_prof").show();
-        $("#input_section").show();
-        $("#classname").attr("disabled", false);
-        $("#classname").val("");
+        $("#add_class_div").show();
+        $("#add_class").attr("disabled", true);
+    });
+
+    $("#confirm_class").click(function() {
+        if ($("#classname").val() !== "") {
+            var class_name = $("#classname").val().toString();
+            var courseDiv = $("<div></div>");
+            courseDiv.attr("id", class_name);
+            courseDiv.attr("class", "list-group-item");
+            // append div elements containing class name, add button, and delete button
+            courseDiv.append(
+                "<div class='d-inline-flex'>" +
+                "<h4 class='p-2'>" + class_name + "</h4>" +
+                "<button class='btn btn-success btn-md p-2 add_prof' style='margin-left: 250px; margin-right: 5px;'><i class='fas fa-plus-circle'></i></button>" +
+                "<button class='btn btn-danger btn-md p-2 del_prof'><i class='fas fa-trash'></i></button>" +
+                "</div>"
+            );
+
+            $("#schedules").append(courseDiv);
+
+            $("#classname").val("");
+            $("#classname_error").text("");
+            $("#add_class_div").hide();
+        } else {
+            $("#classname_error").text("Please input class name (e.g. CCPROG1, CCPROG2)");
+        }
+    });
+
+    $(".add_prof").click(function() {
+        // add prof div
+    });
+
+    $(".del_prof").click(function() {
+        // delete prof div
     });
 
     $("#add_section").click(function() {
@@ -376,7 +405,7 @@ $(document).ready(function() {
         /*
             <div class="container list-group">
                 <div class="list-group-item d-flex flex-row">
-                    <p style="margin-right: 5px;">Sample Text</p>
+                    <p style="margin-right: 5px;">Francis Calimbas</p>
                     <button class="btn btn-success btn-md" style="margin-right: 5px;"><i class="fas fa-plus-circle"></i></button>
                     <button class="btn btn-danger btn-md"><i class="fas fa-trash"></i></button>
                 </div>
