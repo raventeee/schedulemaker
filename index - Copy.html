@@ -13,6 +13,23 @@
 	</head>
     <body>
 		<div id="div_add_form" class="container">
+			<nav class="navbar navbar-light bg-light">
+				<a class="navbar-brand" href="#">SchedMaker</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				  <span class="navbar-toggler-icon"></span>
+				</button>
+			  
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				  <ul class="navbar-nav mr-auto">
+					<li class="nav-item active">
+					  <a class="nav-link" href="#">Home</a>
+					</li>
+					<li class="nav-item">
+					  <a class="nav-link" href="#">Instructions</a>
+					</li>
+				  </ul>
+				</div>
+			  </nav>
 			<div class="row">
 				<div class="col">
 					<div class="container">
@@ -208,7 +225,14 @@
 
 				<div class="col">
 					<div class="container" id="all_sched_items" style="display:block;">
-						<h2>CLASSES</h2>
+						<div class="row">
+							<div class="col-6">
+								<h2>CLASSES</h2>
+							</div>
+							<div class="col-6">
+								<button id="generate" class="btn btn-primary" style="display: none;">GENERATE</button>
+							</div>
+						</div>
 						<div class="row">
 							<div id="schedules" class="container list-group"></div>
 						</div>
@@ -220,7 +244,6 @@
 		</div>
 
 		<div class="container">
-			<button id="generate" class="btn btn-primary" style="display: none;">GENERATE</button>
 			<div id="generated_scheds" class="d-flex justify-content-center" style="display: none;">
 				<button class="btn btn-warning" id="prev" style="display: none;">Previous</button>
 				<button class="btn btn-success" id="next" style="display: none;">Next</button>
@@ -228,14 +251,6 @@
 	
 			<div id= "schedview"></div>
 		</div>
-
-		<!-- <div class="container list-group">
-			<div class="list-group-item d-flex flex-row">
-				<p style="margin-right: 5px;">Francis Calimbas</p>
-				<button class="btn btn-success btn-md" style="margin-right: 5px;"><i class="fas fa-plus-circle"></i></button>
-				<button class="btn btn-danger btn-md"><i class="fas fa-trash"></i></button>
-			</div>
-		</div> -->
 
     </body>
 </html>
