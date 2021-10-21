@@ -259,6 +259,7 @@ $(document).ready(function() {
     // functions and variables here
     var activeCourse = null; // saves the id of the entered class name
     var activeProfSec = null; // saves the id of the entered prof and section
+    var counts = 0; // refers to the number of time slots added
 
     let currentStudent = new student();
     let preprocess = [];
@@ -304,29 +305,57 @@ $(document).ready(function() {
     });
 
     $("#add_class").click(function() {
-        $("#add_section_div").show();
-        $("#prof_prompt").show();
-        $("#input_prof").show();
-        $("#input_section").show();
-        $("#classname").attr("disabled", false);
-        $("#classname").val("");
+        $("#add_class_div").show();
     });
 
-    $("#add_section").click(function() {
+    $("#confirm_class").click(function() {
         if ($("#classname").val() !== "") {
-            activeCourse = $("<div></div>");
-            activeCourse.attr("id", $("#classname").val().toString());
-            activeCourse.html($("#classname").val().toString());
+            var class_name = $("#classname").val().toString();
+            
+            // outer div
+            var outerDiv = $("<div></div>");
+            outerDiv.attr("class", "list-group-item");
 
+            // these elements contains the class name, add button, and delete button
+            var displayDiv = $("<div></div>");
+            displayDiv.attr("class", "d-inline-flex");
+            displayDiv.data("classname", class_name);
+            displayDiv.append(
+                "<h4 class='p-2'>" + class_name + "</h4>" +
+                "<button class='btn btn-success btn-md p-2 add_prof' style='margin-left: 250px; margin-right: 5px;'><i class='fas fa-plus-circle'></i></button>" +
+                "<button class='btn btn-danger btn-md p-2 del_sub'><i class='fas fa-trash'></i></button>"
+            );
+            
+            // main div that will contain section and prof
+            var courseDiv = $("<div></div>");
+            courseDiv.attr("id", class_name);
+            courseDiv.attr("class", "list-group");
+            
+            outerDiv.append(displayDiv);
+            outerDiv.append(courseDiv);
+            $("#schedules").append(outerDiv);
+
+            $("#classname").val("");
             $("#classname_error").text("");
-            $("#add_prof_div").show();
-            $("#add_section").hide();
-            $("#classname").attr("disabled", true);
+            $("#add_class_div").hide();
         } else {
             $("#classname_error").text("Please input class name (e.g. CCPROG1, CCPROG2)");
         }
     });
 
+    /**
+     * This function displays the add prof and section form
+     */
+    $(document).on("click", ".add_prof", function() {
+        $("#add_prof_div").show();
+        
+        activeCourse = $(this).parent().next();
+        // console.log(activeCourse.attr("id"));
+    });
+
+    /**
+     * This function retrieves the entered user inputs professor's name and section
+     */
     $("#confirm_sectionprof").click(function() {
         var isProfEmpty = $("#input_prof").val() === "";
         var isSectionEmpty = $("#input_section").val() === "";
@@ -348,125 +377,144 @@ $(document).ready(function() {
             var prof = $("#input_prof").val().toString();
             var section = $("#input_section").val().toString();
 
-            activeProfSec = $("<div></div>");
-            activeProfSec.attr("id", section + "_" + prof);
-            activeProfSec.attr("class", "list-group");
-            activeProfSec.html(section + " - " + prof);
+            // outer div that corresponds to a section
+            var outerDiv = $("<div></div");
+            outerDiv.attr("class", "list-group-item");
+            
+            // div to display section and prof name
+            var displayDiv = $("<div></div>");
+            displayDiv.attr("class", "d-inline-flex");
+            displayDiv.append(
+                "<h4 class='p-2'>" + section + " - " + prof + "</h4>" +
+                "<button class='btn btn-success btn-md p-2 add_time' style='margin-left: 250px; margin-right: 5px;'><i class='fas fa-plus-circle'></i></button>" +
+                "<button class='btn btn-danger btn-md p-2 del_prof'><i class='fas fa-trash'></i></button>"
+            );
+            
+            // div that will contain the timeslots
+            var profSec = $("<div></div>");
+            profSec.attr("id", section + "_" + prof);
+            profSec.attr("class", "list-group");
+            
+            outerDiv.append(displayDiv);
+            outerDiv.append(profSec);
+            activeCourse.append(outerDiv);
 
-            $("#sched_items").append(activeCourse);
-            activeCourse.append(activeProfSec);
-
-            $("#time_div").show();
-            $("#confirm_sectionprof").hide();
-            $("#prof_prompt").hide();
-            $("#input_prof").attr("disabled", true);
-            $("#input_section").attr("disabled", true);
+            // reset textbox values and hide div
+            $("#input_prof").val("");
+            $("#input_section").val("");
+            $("#add_prof_div").hide();
         }
     });
 
-    $("#add_item").click(function() {
-        // resetting the form is only allowed if user added at least 1 timeslot
-        $("#add_another").show();
-        $("#putsched").show();
+    $(document).on("click", ".add_time", function() {
+        // add a timeslot
+        $("#time_div").show();
+        activeProfSec = $(this).parent().next();
+    });
 
+    /*
+        This function retrieves the user input timeslot sched
+    */
+    $("#add_item").click(function() {
         var day = $("#input_day").val().toString();
         var start = $("#input_start").val().toString();
         var end = $("#input_end").val().toString();
 
-        /*
-            <div class="container list-group">
-                <div class="list-group-item d-flex flex-row">
-                    <p style="margin-right: 5px;">Sample Text</p>
-                    <button class="btn btn-success btn-md" style="margin-right: 5px;"><i class="fas fa-plus-circle"></i></button>
-                    <button class="btn btn-danger btn-md"><i class="fas fa-trash"></i></button>
-                </div>
-		    </div>
-        */
-
+        var outerDiv = $("<div></div>");
+        outerDiv.attr("class", "list-group-item d-inline-flex");
         var parag = $("<p></p>");
-        parag.attr("class", "list-group-item");
-        parag.text(day + " " + start + " " + end);
+        parag.attr("class", "p-2");
+        parag.text(day + " " + start + "-" + end);
 
-        activeProfSec.append(parag);
-
-        var button = $("<button></button>");
-        var icon = $("<i></i>");
-        icon.attr("class", "class='fas fa-trash delete_item");
-        button.append(icon);
-
-        activeProfSec.append(button);
-
-        activeProfSec.append(
-            "<p class='list-group-item'>" + day + " " + start + " " + end + "</p>"
+        var deleteBtn = $("<button></button>");
+        deleteBtn.attr("class", "p-2 del_time")
+        deleteBtn.append(
+            "<i class='fas fa-trash'></i>"
         );
+
+        outerDiv.append(parag);
+        outerDiv.append(deleteBtn);
+        activeProfSec.append(outerDiv);
         
+        counts++;
+        if (counts > 0) {
+            $("#generate").show();
+        }
+
+        $("#time_div").hide();
         // set to defaults
         $("#input_day option[value='M']").attr("selected", true);
         $("#input_start option[value='7:30']").attr("selected", true);
         $("#input_end option[value='7:30']").attr("selected", true);
     });
 
-    /*
-        $(document).on('click', '.delGFatherWitnessBtn', function () {
-    const member = $(this).closest('.card').attr('data-member-info')
-    if (member !== null) {
-      selectizeEnable(member)
-    }
-    $(this).closest('.col-4').remove()
-    GFatherWitnessCtr--
-  })
-    */
-
-    $("#add_another").click(function() {
-        $("#prof_prompt").show();
-        $("#input_prof").attr("disabled", false);
-        $("#input_prof").val("");
-        $("#input_section").attr("disabled", false);
-        $("#input_section").val("");
-        $("#confirm_sectionprof").hide();
-        $("#another_sectionprof").show();
-        $("#add_another").hide();
-        $("#putsched").hide();
-        $("#time_div").hide();
+    $(document).on("click", ".del_sub", function() {
+        // delete sub div
+        var sub = $(this).parent().next().attr("id");
+        // console.log(sub);
+        var profs = document.getElementById(sub).children;
+        for(let i = 0; i < profs.length; i++) {
+            let temp_section = profs[i].children[1].children;
+            for(let j = 0; j < temp_section.length; j++) {
+                counts--;
+            }
+        }
+        $(this).parent().parent().remove();
     });
 
-    $("#another_sectionprof").click(function() {
-        $("#time_div").show();
-        var prof = $("#input_prof").val().toString();
-        var section = $("#input_section").val().toString();
+    $(document).on("click", ".del_prof", function() {
+        // deletes the section list
+        var sections = $(this).parent().next().children().length;
+        for(let i = 0; i < sections; i++) {
+            counts--;
+        }
+        if (counts <= 0) {
+            $("#generate").hide();
+            counts = 0;
+        }
+        $(this).parent().parent().remove();
+    });
 
-        activeProfSec = $("<div></div>");
-        activeProfSec.attr("id", section + "_" + prof);
-        activeProfSec.attr("class", "list-group");
-        activeProfSec.html(section + " - " + prof);
-
-        $("#sched_items").append(activeCourse);
-        activeCourse.append(activeProfSec);
+    $(document).on("click", ".del_time", function() {
+        // delete a time slot
+        counts--;
+        if(counts <= 0) {
+            $("#generate").hide();
+            counts = 0;
+        }
+        $(this).parent().remove();
     });
 
     $("#generate").click(function() {
         var sched_items = document.getElementById("schedules").children;
         
+        // subjects/courses/classes
         for(let i = 0; i < sched_items.length; i++) {
-            classnames.push(sched_items[i].id);
-
-            let section_list = sched_items[i].children;
-            let tempsched = [];
-            for(let j = 0; j < section_list.length; j++) {
-                let section_prof = section_list[j].id.toString().split("_");
-                section_prof = section_prof[0] + " - " + section_prof[1];
+            let temp_sub = sched_items[i].children[1]; // ex. div with id="STSWENG"
+            classnames.push(temp_sub.id); // "STSWENG"
+            
+            let temp_sections = temp_sub.children; // outer div
+            let tempsched = []; // refers to 1 class
+            for(let j = 0; j < temp_sections.length; j++) {
+                let tempsec = []; // will contain an array containing <SECTION NAME> (1st elem) and <ARRAY SCHED>
+                // console.log(temp_sections[j].children.length);
+                let temp_prof = temp_sections[j].children[1];
                 
-                let tempsec = [];
+                // get section and prof then push to tempsec array, example output will now be ["S12 - Prof"]
+                let section_prof = temp_prof.id.toString().split("_");
+                section_prof = section_prof[0] + " - " + section_prof[1];
                 tempsec.push(section_prof);
 
-                let time_slots = section_list[j].children;
+                let temp_times = temp_prof.children;
                 let all_slots = [];
-                for(let k = 0; k < time_slots.length; k++) {
-                    let info = time_slots[k].innerHTML.split(" ");
+                for(let k = 0; k < temp_times.length; k++) {
+                    let info = temp_times[k].children[0].innerHTML.split(" "); // M, 7:30-9:00
                     let slot = [];
                     slot.push(info[0]);
-                    slot.push(info[1]);
-                    slot.push(info[2]);
+
+                    let time_slots = info[1].split("-"); // 7:30, 9:00
+                    slot.push(time_slots[0]);
+                    slot.push(time_slots[1]);
 
                     all_slots.push(slot);
                 }
